@@ -4,7 +4,7 @@ import { Profile, WorkStatus } from "../types";
 export const MY_PROFILE: Profile = {
   name: "並木　健太", // ここを書き換えてください
   brandName: "Reframe /",
-  title: "Webエンジニア / ビジネス実装パートナー",
+  title: "Webエンジニア / 業務効率化",
   message: "あなたの『やりたい』を、設計から公開まで一気通貫で形にします。",
   skills: ["TypeScript", "Next.js", "Python", "GAS", "RPA"],
   projects: [
