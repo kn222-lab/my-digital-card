@@ -54,16 +54,19 @@ export default function ProfilePage() {
         >
           <section>
             <h2 className="text-xl font-bold mb-6 border-l-4 border-blue-600 pl-4">Background</h2>
-            <div className="text-slate-300 leading-relaxed space-y-4">
-              <p>
+            <div className="text-slate-300 leading-relaxed space-y-6">
+                <p>
                 エンジニアとしてキャリアをスタートした後、一度その道を離れ、リラクゼーション・整体の世界に身を置きました。
-              </p>
-              <p>
-                身体や人の状態を深く見る経験を通じて学んだのは、<span className="text-white font-medium underline decoration-blue-500/50 underline-offset-4">「物事は立ち位置や枠組み（フレーム）次第で、見え方が大きく変わる」</span>ということです。
-              </p>
-              <p>
-                再びエンジニアの領域に戻ってきた今、以前と同じ場所に立っていても、見えている景色はまったく違います。この多角的な視点こそが、私の最大の強みです。
-              </p>
+                </p>
+                <p>
+                日々、身体や人の状態を深く見つめる経験を通じて学んだのは、<span className="text-white font-medium underline decoration-blue-500/50 underline-offset-4">「物事は立ち位置や枠組み（フレーム）次第で、見え方が大きく変わる」</span>ということです。
+                </p>
+                <p>
+                それは単なる身体の構造に留まりませんでした。一人ひとりの人生観や価値観、根底にある考え方に深く触れる中で、<span className="text-blue-400">「何を良しとするか」というフレームが変われば、導き出される解決策もまた変わる</span>という事実に強い影響を受けました。
+                </p>
+                <p>
+                再びエンジニアの領域に戻ってきた今、以前と同じ場所に立っていても、見えている景色はまったく違います。この多角的な視点と、人の価値観に寄り添うマインドこそが、私の最大の強みです。
+                </p>
             </div>
           </section>
 
