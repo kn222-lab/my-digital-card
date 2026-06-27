@@ -1,11 +1,32 @@
 "use client";
-import { motion, Variants } from "framer-motion";
+import { useState, useEffect } from "react"; // 1. インポートを追加
+import { motion, Variants, useMotionValue, useTransform } from "framer-motion"; // useMotionValueなど追加
 import { MY_PROFILE } from "../constants/profile";
 
 type AccentColor = "text-blue-600" | "text-emerald-600" | "text-violet-600" | "text-orange-600";
 const COLORS: AccentColor[] = ["text-blue-600", "text-emerald-600", "text-violet-600", "text-orange-600"];
 
 export default function Home() {
+  // 2. マウスの座標を取得する処理を追加
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // 画面の中心を(0,0)とした座標に変換し、動きの幅を調整（-0.5〜0.5）
+      mouseX.set(e.clientX / window.innerWidth - 0.5);
+      mouseY.set(e.clientY / window.innerHeight - 0.5);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
+  // 座標をグラデーションの位置に変換するための変数を定義
+  // マウスが動くと、グラデーションの中心もかすかに動く
+  const gradientX = useTransform(mouseX, [-0.5, 0.5], ["30%", "70%"]);
+  const gradientY = useTransform(mouseY, [-0.5, 0.5], ["30%", "70%"]);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -28,15 +49,28 @@ export default function Home() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      // スマホでは p-6, PC(md以上)では p-24 に可変
-      className="min-h-screen bg-slate-50 p-6 md:p-24 font-sans bg-grid"
+      // bg-grid は残し、relative を追加
+      className="min-h-screen bg-slate-50 p-6 md:p-24 font-sans bg-grid relative overflow-hidden"
     >
-      <div className="max-w-3xl mx-auto space-y-10 md:space-y-16">
+      {/* 3. マウス追従のスポットライト背景を追加 */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none opacity-40 z-0"
+        style={{
+          background: useTransform(
+            [gradientX, gradientY],
+            ([x, y]) => `radial-gradient(circle at ${x} ${y}, rgba(29, 78, 216, 0.15) 0%, rgba(29, 78, 216, 0) 50%)`
+            // rgba(29, 78, 216) は blue-700 の色
+          ),
+        }}
+      />
+
+      {/* 既存のコンテンツは z-10 を追加して背景より上に表示 */}
+      <div className="max-w-3xl mx-auto space-y-10 md:space-y-16 relative z-10">
         
         {/* ヒーローセクション */}
         <motion.section variants={itemVariants} className="space-y-4">
           <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tighter">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tighter hover:tracking-tight transition-all duration-300">
               Reframe <span className="text-blue-600 animate-cursor font-mono">/</span>
             </h1>
             <span className="text-slate-400 text-base md:text-lg font-medium">by {MY_PROFILE.name}</span>
@@ -54,13 +88,13 @@ export default function Home() {
         {/* Concept セクション */}
         <motion.section 
           variants={itemVariants}
-          className="py-10 px-6 md:py-12 md:px-10 bg-slate-900 text-slate-50 rounded-[2rem] shadow-2xl relative overflow-hidden"
+          className="py-10 px-6 md:py-12 md:px-10 bg-slate-900 text-slate-50 rounded-[2rem] shadow-2xl relative overflow-hidden group"
         >
           <motion.div 
             initial={{ rotate: -10, opacity: 0 }}
             animate={{ rotate: 0, opacity: 0.08 }} // スマホで見えすぎないよう透明度を微調整
-            whileHover={{ scale: 1.1, rotate: 5, opacity: 0.15 }}
-            className="absolute -right-6 -bottom-8 text-[10rem] md:text-[15rem] font-bold text-slate-400 pointer-events-none select-none"
+            whileHover={{ scale: 1.1, rotate: 10, opacity: 0.2 }} // 回転を少し強く
+            className="absolute -right-6 -bottom-8 text-[10rem] md:text-[15rem] font-bold text-slate-400 pointer-events-none select-none transition-transform duration-500"
           >
             /
           </motion.div>
@@ -82,9 +116,13 @@ export default function Home() {
           <h2 className="text-xl md:text-2xl font-bold text-slate-800 border-b-2 border-blue-500 w-fit">Skills</h2>
           <div className="flex flex-wrap gap-2 md:gap-3">
             {MY_PROFILE.skills.map((skill) => (
-              <span key={skill} className="px-3 py-1 bg-white border border-slate-200 rounded-full text-slate-700 text-xs md:text-sm shadow-sm">
+              <motion.span 
+            key={skill} 
+            whileHover={{ scale: 1.1, y: -2 }}
+            className="px-3 py-1 bg-white border border-slate-200 rounded-full text-slate-700 text-xs md:text-sm shadow-sm cursor-default transition-all"
+          >
                 {skill}
-              </span>
+              </motion.span>
             ))}
           </div>
         </motion.section>
@@ -94,7 +132,12 @@ export default function Home() {
           <h2 className="text-xl md:text-2xl font-bold text-slate-800 border-b-2 border-blue-500 w-fit">Projects</h2>
           <div className="grid gap-6">
             {MY_PROFILE.projects.map((project) => (
-              <div key={project.id} className="p-5 md:p-8 bg-white rounded-2xl shadow-md border border-slate-100 hover:shadow-xl transition-all group">
+              <motion.div 
+            key={project.id} 
+            // 4. Projectsカードのホバー・インタラクション（提案2）を少し追加
+            whileHover={{ y: -5, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
+            className="p-5 md:p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-md border border-slate-100 hover:shadow-xl transition-all group"
+          >
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4">
                   <h3 className="text-lg md:text-xl font-bold text-slate-900">{project.title}</h3>
                   {project.link && (
@@ -119,7 +162,7 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.section>
@@ -127,6 +170,7 @@ export default function Home() {
         <footer className="text-center pt-8 md:pt-12 text-slate-400 text-[10px] md:text-xs">
           © 2026 {MY_PROFILE.name} | Reframe / Digital Identity
         </footer>
+        
       </div>
     </motion.main>
   );
