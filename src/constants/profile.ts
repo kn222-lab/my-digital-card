@@ -2,12 +2,21 @@
 import { Profile, WorkStatus } from "../types";
 
 export const MY_PROFILE: Profile = {
-  name: "並木　健太", // ここを書き換えてください
+  name: "並木 健太",
   brandName: "Reframe /",
   title: "Webエンジニア / 業務効率化",
   message: "あなたの『やりたい』を、設計から公開まで一気通貫で形にします。",
-  skills: ["TypeScript", "Next.js", "Python", "GAS", "RPA"],
+  // Wix をスキルの末尾に追加しました
+  skills: ["TypeScript", "Next.js", "Python", "GAS", "RPA", "Wix"],
   projects: [
+    // 【新着】Wixの制作実績を先頭に追加しました
+    {
+      id: "wix-web-production",
+      title: "Wixを活用した「自走できる」ホームページ制作",
+      description: "「デザインにはこだわりたいけれど、納品後のブログやイベント情報、お知らせは自分たちで手軽に更新したい」という小さなお店や個人事業主様に向けたWebサイト制作。ノーコードツール『Wix』を選定し、初期デザイン構築から独自ドメイン設定、公開後の操作レクチャーまでをトータルでサポート。運用コストを抑え、クライアント様自身で育てていけるWebサイト運用を実現しました。",
+      technology: ["Wix", "Web Design"],
+      // link: "https://example.com", // 今後公開できる実際のURLがあればコメントアウトを外して設定してください
+    },
     {
       id: "action-tracker",
       title: "会議アクショントラッカー",
@@ -22,7 +31,6 @@ export const MY_PROFILE: Profile = {
       technology: ["GAS", "LINE API", "Notion API"],
       link: "https://script.google.com/macros/s/AKfycbzItXiqH4MY9CPmEbF1tTOD_zOPLKFoWB5EKtU0PMHL62tQJGN0a74CFBNUGDI5rD9V/exec",
     },
-    // 事例3も同様に追加...
   ],
   concept: [
     "エンジニアとして働いたあと、一度その道を離れ、リラクゼーション・整体の世界に身を置きました。",
