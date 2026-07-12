@@ -5,9 +5,11 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const pathname = usePathname();
 
+  // src/components/Navbar.tsx 内の該当箇所
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Profile", href: "/profile" },
+    { name: "Bodycare", href: "/bodycare" }, // ← ここを追加！
     { name: "Plan", href: "/plan" },
     { name: "Contact", href: "/contact"},
   ];
