@@ -7,6 +7,7 @@ export const MY_PROFILE: Profile = {
   title: "Webエンジニア / 業務効率化",
   message: "あなたの『やりたい』を、設計から公開まで一気通貫で形にします。",
   // Wix をスキルの末尾に追加しました
+  
   skills: ["TypeScript", "Next.js", "Python", "GAS", "RPA", "Wix"],
   projects: [
     // 【新着】Wixの制作実績を先頭に追加しました

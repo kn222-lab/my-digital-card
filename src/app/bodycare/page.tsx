@@ -17,7 +17,6 @@ export default function BodycarePage() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // 整体ページはおだやかなグリーン（emerald）のスポットライトにリアレンジ
   const gradientX = useTransform(mouseX, [-0.5, 0.5], ["30%", "70%"]);
   const gradientY = useTransform(mouseY, [-0.5, 0.5], ["30%", "70%"]);
 
@@ -83,7 +82,7 @@ export default function BodycarePage() {
                   {loc.weeks}
                 </span>
                 <h3 className="text-lg font-bold text-slate-900 mb-1">{loc.place}</h3>
-                <p className="text-xs text-slate-400 mb-3 font-medium">📍 {loc.station}</p>
+                <p className="text-xs text-slate-500 mb-3 font-medium">📍 {loc.station}</p>
                 <p className="text-sm text-slate-600 leading-relaxed">{loc.description}</p>
               </div>
             ))}
@@ -100,7 +99,7 @@ export default function BodycarePage() {
                   <h3 className="text-base md:text-lg font-bold text-slate-900">{item.name}</h3>
                   <p className="text-sm text-slate-600 leading-relaxed">{item.detail}</p>
                 </div>
-                <div className="text-left md:text-right min-w-[100px] flex flex-row md:flex-col justify-between md:justify-center items-center md:items-end border-t md:border-t-0 border-slate-100 pt-3 md:pt-0">
+                <div className="text-left md:text-right min-w-[120px] flex flex-row md:flex-col justify-between md:justify-center items-center md:items-end border-t md:border-t-0 border-slate-100 pt-3 md:pt-0">
                   <span className="text-xs font-mono text-slate-400 md:mb-1">{item.time}</span>
                   <span className="text-lg font-bold text-slate-900 font-mono">{item.price}</span>
                 </div>
@@ -109,21 +108,36 @@ export default function BodycarePage() {
           </div>
         </motion.section>
 
-        {/* ご予約について（Contactへの導線） */}
+        {/* ご予約について（予約システムへのメイン導線） */}
         <motion.section 
           variants={itemVariants}
-          className="py-10 px-6 md:py-12 md:px-10 bg-slate-900 text-slate-50 rounded-[2rem] shadow-2xl text-center space-y-4"
+          className="py-10 px-6 md:py-12 md:px-10 bg-slate-900 text-slate-50 rounded-[2rem] shadow-2xl text-center space-y-6"
         >
-          <h3 className="text-xl font-bold">施術のご予約・ご相談</h3>
-          <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-            現在、週末の施術は完全予約制にて承っております。「まずは身体の状態を相談したい」という方も、以下のフォームよりお気軽にご連絡ください。
-          </p>
-          <div className="pt-2">
+          <div className="space-y-2">
+            <h3 className="text-xl md:text-2xl font-bold">施術のご予約</h3>
+            <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+              週末の施術は完全予約制にて承っております。以下の専用予約ページより、ご希望の日時を選択の上ご予約ください。
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
+            <a 
+              href="https://refame-reservations.onrender.com/" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto bg-emerald-600 text-white font-bold text-sm px-8 py-3.5 rounded-full hover:bg-emerald-500 transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
+            >
+              <span>Web予約はこちら</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+
             <a 
               href="/contact" 
-              className="inline-block bg-emerald-600 text-white font-bold text-sm px-8 py-3 rounded-full hover:bg-emerald-500 transition-all shadow-md active:scale-95"
+              className="w-full sm:w-auto border border-slate-700 text-slate-300 font-bold text-sm px-6 py-3.5 rounded-full hover:bg-slate-800 transition-all active:scale-95"
             >
-              お問い合わせフォームへ
+              事前のご相談はこちら
             </a>
           </div>
         </motion.section>
