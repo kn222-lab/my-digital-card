@@ -1,29 +1,23 @@
+// src/app/page.tsx
 "use client";
-import { useState, useEffect } from "react"; // 1. インポートを追加
-import { motion, Variants, useMotionValue, useTransform } from "framer-motion"; // useMotionValueなど追加
+import { useEffect } from "react";
+import Image from "next/image";
+import { motion, Variants, useMotionValue, useTransform } from "framer-motion";
 import { MY_PROFILE } from "../constants/profile";
 
-type AccentColor = "text-blue-600" | "text-emerald-600" | "text-violet-600" | "text-orange-600";
-const COLORS: AccentColor[] = ["text-blue-600", "text-emerald-600", "text-violet-600", "text-orange-600"];
-
 export default function Home() {
-  // 2. マウスの座標を取得する処理を追加
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // 画面の中心を(0,0)とした座標に変換し、動きの幅を調整（-0.5〜0.5）
       mouseX.set(e.clientX / window.innerWidth - 0.5);
       mouseY.set(e.clientY / window.innerHeight - 0.5);
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // 座標をグラデーションの位置に変換するための変数を定義
-  // マウスが動くと、グラデーションの中心もかすかに動く
   const gradientX = useTransform(mouseX, [-0.5, 0.5], ["30%", "70%"]);
   const gradientY = useTransform(mouseY, [-0.5, 0.5], ["30%", "70%"]);
 
@@ -31,7 +25,7 @@ export default function Home() {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1, 
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+      transition: { staggerChildren: 0.12, delayChildren: 0.1 }
     }
   };
 
@@ -49,125 +43,147 @@ export default function Home() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      // bg-grid は残し、relative を追加
       className="min-h-screen bg-slate-50 p-6 md:p-24 font-sans bg-grid relative overflow-hidden"
     >
-      {/* 3. マウス追従のスポットライト背景を追加 */}
+      {/* マウス追従スポットライト */}
       <motion.div 
         className="absolute inset-0 pointer-events-none opacity-40 z-0"
         style={{
           background: useTransform(
             [gradientX, gradientY],
             ([x, y]) => `radial-gradient(circle at ${x} ${y}, rgba(29, 78, 216, 0.15) 0%, rgba(29, 78, 216, 0) 50%)`
-            // rgba(29, 78, 216) は blue-700 の色
           ),
         }}
       />
 
-      {/* 既存のコンテンツは z-10 を追加して背景より上に表示 */}
-      <div className="max-w-3xl mx-auto space-y-10 md:space-y-16 relative z-10">
+      <div className="max-w-3xl mx-auto space-y-12 md:space-y-16 relative z-10 pt-2">
         
-        {/* ヒーローセクション */}
-        <motion.section variants={itemVariants} className="space-y-4">
-          <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tighter hover:tracking-tight transition-all duration-300">
-              Reframe <span className="text-blue-600 animate-cursor font-mono">/</span>
+        {/* 1. ブランドヘッダー */}
+        <motion.section variants={itemVariants} className="space-y-1">
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter">
+              Reframe <span className="text-blue-600 font-mono">/</span>
             </h1>
-            <span className="text-slate-400 text-base md:text-lg font-medium">by {MY_PROFILE.name}</span>
+            <span className="text-slate-400 text-xs md:text-sm font-medium">by {MY_PROFILE.name}</span>
           </div>
-          <p className="text-lg md:text-xl text-blue-600 font-semibold tracking-tight">
-            {MY_PROFILE.title}
+          <p className="text-xs md:text-sm text-blue-600 font-bold tracking-tight">
+            IT伴走パートナー / 整体師
           </p>
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 md:p-6 mt-4">
-            <p className="text-slate-700 leading-relaxed whitespace-pre-wrap italic text-sm md:text-base">
-              {MY_PROFILE.message}
-            </p>
-          </div>
         </motion.section>
 
-        {/* Concept セクション */}
-        <motion.section 
-          variants={itemVariants}
-          className="py-10 px-6 md:py-12 md:px-10 bg-slate-900 text-slate-50 rounded-[2rem] shadow-2xl relative overflow-hidden group"
-        >
-          <motion.div 
-            initial={{ rotate: -10, opacity: 0 }}
-            animate={{ rotate: 0, opacity: 0.08 }} // スマホで見えすぎないよう透明度を微調整
-            whileHover={{ scale: 1.1, rotate: 10, opacity: 0.2 }} // 回転を少し強く
-            className="absolute -right-6 -bottom-8 text-[10rem] md:text-[15rem] font-bold text-slate-400 pointer-events-none select-none transition-transform duration-500"
-          >
-            /
-          </motion.div>
+        {/* 2. 大型キャッチコピー & ヒーロー写真 */}
+        <motion.section variants={itemVariants} className="space-y-6">
+          {/* 大胆な一言キャッチコピー */}
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.15]">
+            難解なことを、<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">
+              解きほぐす。
+            </span>
+          </h2>
 
-          <div className="relative z-10 space-y-6">
-            <h2 className="text-xl md:text-2xl font-bold border-b border-slate-700 pb-2 font-mono italic">
-              Concept <span className="text-blue-400">/</span>
-            </h2>
-            <div className="space-y-4 text-slate-300 leading-relaxed text-base md:text-lg">
-              {MY_PROFILE.concept.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
+          <p className="text-slate-600 text-sm md:text-base leading-relaxed max-w-xl">
+            ITの使いこなしも、自身の身体の理解も。納得して前に進むための「枠組み」を整えます。
+          </p>
+
+            {/* ヒーロー写真ビジュアル */}
+            <div className="relative w-full h-56 sm:h-72 md:h-80 rounded-3xl overflow-hidden shadow-xl border border-slate-200/60 group">
+              <img 
+              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+              alt="Reframe Background"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            />
+            {/* 上品なグラデーションオーバーレイ */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/10 to-transparent" />
+            
+            <div className="absolute bottom-4 left-6 right-6 text-white flex justify-between items-end">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-300">Location</span>
+                <p className="text-xs font-bold">Kamakura & Zushi, Japan</p>
+              </div>
+              <span className="text-[10px] font-mono text-slate-300">Reframe / Identity</span>
             </div>
           </div>
         </motion.section>
 
-        {/* スキルタグ */}
+        {/* 3. 2つの事業軸（シンプルカード） */}
         <motion.section variants={itemVariants} className="space-y-4">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-800 border-b-2 border-blue-500 w-fit">Skills</h2>
-          <div className="flex flex-wrap gap-2 md:gap-3">
-            {MY_PROFILE.skills.map((skill) => (
-              <motion.span 
-            key={skill} 
-            whileHover={{ scale: 1.1, y: -2 }}
-            className="px-3 py-1 bg-white border border-slate-200 rounded-full text-slate-700 text-xs md:text-sm shadow-sm cursor-default transition-all"
-          >
+          <h3 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">OUR SERVICES</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* IT伴走 */}
+            <div className="p-6 bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-100 shadow-sm space-y-3">
+              <div className="text-2xl">💻</div>
+              <h4 className="font-bold text-slate-900 text-base md:text-lg">IT伴走 & 業務改善</h4>
+              <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
+                現場のリテラシーに合わせてツールを最適化。自分で使いこなせる（自走できる）まで丁寧に伴走します。
+              </p>
+              <div className="pt-1 flex flex-wrap gap-1">
+                {["Wix", "GAS", "Java / SQL"].map(t => (
+                  <span key={t} className="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded">{t}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* 整体 */}
+            <a href="/bodycare" className="p-6 bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-100 shadow-sm space-y-3 hover:border-emerald-200 transition-all group block">
+              <div className="flex justify-between items-start">
+                <div className="text-2xl">🌿</div>
+                <span className="text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">詳細を見る →</span>
+              </div>
+              <h4 className="font-bold text-slate-900 text-base md:text-lg">身体のコンディショニング</h4>
+              <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
+                逗子・由比ガ浜での週末整体。施術とともに自身の身体の状態や癖を深く理解できる時間を提供します。
+              </p>
+              <div className="pt-1 flex flex-wrap gap-1">
+                {["逗子 (神武寺)", "由比ヶ浜", "60分 ¥8,000"].map(t => (
+                  <span key={t} className="text-[10px] font-mono bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded">{t}</span>
+                ))}
+              </div>
+            </a>
+          </div>
+        </motion.section>
+
+        {/* 4. スキルタグ */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h3 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">SKILLS</h3>
+          <div className="flex flex-wrap gap-2">
+            {["IT導入・伴走支援", "業務プロセス改善", "Wix (HP制作)", "GAS / Notion / LINE", "Java / Spring Boot / SQL", "骨格調整・身体理解"].map((skill) => (
+              <span 
+                key={skill} 
+                className="px-3 py-1 bg-white border border-slate-200 rounded-full text-slate-700 text-xs shadow-sm"
+              >
                 {skill}
-              </motion.span>
+              </span>
             ))}
           </div>
         </motion.section>
 
-        {/* プロジェクト一覧 */}
-        <motion.section variants={itemVariants} className="space-y-6">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-800 border-b-2 border-blue-500 w-fit">Projects</h2>
-          <div className="grid gap-6">
+        {/* 5. 主な実績 */}
+        <motion.section variants={itemVariants} className="space-y-4">
+          <h3 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">WORKS & PROJECTS</h3>
+          <div className="space-y-3">
             {MY_PROFILE.projects.map((project) => (
-              <motion.div 
-            key={project.id} 
-            // 4. Projectsカードのホバー・インタラクション（提案2）を少し追加
-            whileHover={{ y: -5, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
-            className="p-5 md:p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-md border border-slate-100 hover:shadow-xl transition-all group"
-          >
-                <div className="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4">
-                  <h3 className="text-lg md:text-xl font-bold text-slate-900">{project.title}</h3>
-                  {project.link && (
-                    <a 
-                      href={project.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-xs font-bold text-blue-600 bg-blue-50 px-4 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-all shadow-sm active:scale-95 whitespace-nowrap"
-                    >
-                      <span>詳しく見る</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                  )}
-                </div>
-                <p className="text-sm md:text-base text-slate-600 mb-6 leading-relaxed">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.technology.map((tech) => (
-                    <span key={tech} className="font-mono text-[9px] md:text-[10px] uppercase tracking-wider text-blue-500 bg-blue-50/30 px-2 py-1 rounded border border-blue-100/50">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
+              <div 
+                key={project.id} 
+                className="p-5 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-100 shadow-sm space-y-2"
+              >
+                <h4 className="text-sm md:text-base font-bold text-slate-900">{project.title}</h4>
+                <p className="text-xs md:text-sm text-slate-600 leading-relaxed">{project.description}</p>
+              </div>
             ))}
           </div>
         </motion.section>
 
-        <footer className="text-center pt-8 md:pt-12 text-slate-400 text-[10px] md:text-xs">
+        {/* 6. プロフィールページへのリンク */}
+        <motion.section variants={itemVariants} className="text-center pt-2">
+          <a 
+            href="/profile" 
+            className="inline-block text-xs font-bold text-slate-500 hover:text-blue-600 bg-white border border-slate-200 px-5 py-2.5 rounded-full transition-all shadow-sm hover:shadow"
+          >
+            Reframe / の詳しいプロフィール・思想を見る →
+          </a>
+        </motion.section>
+
+        <footer className="text-center pt-6 text-slate-400 text-[10px]">
           © 2026 {MY_PROFILE.name} | Reframe / Digital Identity
         </footer>
         
