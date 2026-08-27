@@ -43,7 +43,7 @@ export default function Home() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-screen bg-slate-50 p-6 md:p-24 font-sans bg-grid relative overflow-hidden"
+      className="min-h-screen bg-slate-50 px-6 py-4 md:px-24 md:py-8 font-sans bg-grid relative overflow-hidden"
     >
       {/* マウス追従スポットライト */}
       <motion.div 
@@ -58,36 +58,31 @@ export default function Home() {
 
       <div className="max-w-3xl mx-auto space-y-12 md:space-y-16 relative z-10 pt-2">
         
-        {/* 1. ブランドヘッダー */}
-        <motion.section variants={itemVariants} className="space-y-1">
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter">
-              Reframe <span className="text-blue-600 font-mono">/</span>
-            </h1>
-            <span className="text-slate-400 text-xs md:text-sm font-medium">by {MY_PROFILE.name}</span>
-          </div>
-          <p className="text-xs md:text-sm text-blue-600 font-bold tracking-tight">
-            IT伴走パートナー / 整体師
-          </p>
-        </motion.section>
-
-        {/* 2. 大型キャッチコピー & ヒーロー写真 */}
-        <motion.section variants={itemVariants} className="space-y-6">
-          {/* 大胆な一言キャッチコピー */}
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.15]">
-            難解なことを、<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">
-              解きほぐす。
+        {/* 大型キャッチコピー & ヒーロー写真 */}
+        <motion.section variants={itemVariants} className="space-y-6 pt-2">
+          {/* サブタグ（名前と肩書きをさりげなく配置） */}
+          <div className="flex items-center gap-2 text-xs md:text-sm font-bold">
+            <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full border border-blue-100">
+              IT活用サポート / 整体師
             </span>
-          </h2>
+            <span className="text-slate-400">by 並木 健太</span>
+          </div>
+
+          {/* ドンと目に飛び込む大型キャッチコピー */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.15]">
+            「難しい」を、<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">
+              「使える」に変える。
+            </span>
+          </h1>
 
           <p className="text-slate-600 text-sm md:text-base leading-relaxed max-w-xl">
-            ITの使いこなしも、自身の身体の理解も。納得して前に進むための「枠組み」を整えます。
+            専門用語ばかりのITも、自分自身の身体の現在地も。かみ砕いて理解し、自分で使いこなすための「枠組み」を整えます。
           </p>
 
-            {/* ヒーロー写真ビジュアル */}
-            <div className="relative w-full h-56 sm:h-72 md:h-80 rounded-3xl overflow-hidden shadow-xl border border-slate-200/60 group">
-              <img 
+          {/* ヒーロー写真ビジュアル */}
+          <div className="relative w-full h-56 sm:h-72 md:h-80 rounded-3xl overflow-hidden shadow-xl border border-slate-200/60 group">
+            <img 
               src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
               alt="Reframe Background"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -164,10 +159,35 @@ export default function Home() {
             {MY_PROFILE.projects.map((project) => (
               <div 
                 key={project.id} 
-                className="p-5 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-100 shadow-sm space-y-2"
+                className="p-5 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-100 shadow-sm space-y-3"
               >
-                <h4 className="text-sm md:text-base font-bold text-slate-900">{project.title}</h4>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <h4 className="text-sm md:text-base font-bold text-slate-900">{project.title}</h4>
+                  
+                  {/* link が存在する場合のみボタンを表示 */}
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors w-fit"
+                    >
+                      <span>デモ・詳細を見る</span>
+                      <span className="text-[10px]">↗</span>
+                    </a>
+                  )}
+                </div>
+
                 <p className="text-xs md:text-sm text-slate-600 leading-relaxed">{project.description}</p>
+
+                {/* 技術タグ */}
+                <div className="flex flex-wrap gap-1 pt-1">
+                  {project.technology.map((t) => (
+                    <span key={t} className="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

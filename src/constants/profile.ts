@@ -19,13 +19,6 @@ export const MY_PROFILE: Profile = {
       // link: "https://example.com", // 今後公開できる実際のURLがあればコメントアウトを外して設定してください
     },
     {
-      id: "action-tracker",
-      title: "会議アクショントラッカー",
-      description: "会議の決定事項を確実にアクションへ繋げるタスク管理ツール。",
-      technology: ["Python", "Flask"],
-      link: "https://meeting-action-tracker.onrender.com/ui/meetings",
-    },
-    {
       id: "line-notion",
       title: "LINE × Notion 業務連携",
       description: "現場の入力をLINEで完結させ、Notionへ自動集約するシステム。",
