@@ -117,23 +117,6 @@ export default function Home() {
                 ))}
               </div>
             </div>
-
-            {/* 整体 */}
-            <a href="/bodycare" className="p-6 bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-100 shadow-sm space-y-3 hover:border-emerald-200 transition-all group block">
-              <div className="flex justify-between items-start">
-                <div className="text-2xl">🌿</div>
-                <span className="text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">詳細を見る →</span>
-              </div>
-              <h4 className="font-bold text-slate-900 text-base md:text-lg">身体のコンディショニング</h4>
-              <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
-                逗子・由比ガ浜での週末整体。施術とともに自身の身体の状態や癖を深く理解できる時間を提供します。
-              </p>
-              <div className="pt-1 flex flex-wrap gap-1">
-                {["逗子 (神武寺)", "由比ヶ浜", "60分 ¥8,000"].map(t => (
-                  <span key={t} className="text-[10px] font-mono bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded">{t}</span>
-                ))}
-              </div>
-            </a>
           </div>
         </motion.section>
 
