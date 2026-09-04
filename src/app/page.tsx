@@ -60,15 +60,15 @@ export default function Home() {
         
         {/* 大型キャッチコピー & ヒーロー写真 */}
         <motion.section variants={itemVariants} className="space-y-6 pt-2">
-          {/* サブタグ（名前と肩書きをさりげなく配置） */}
+          {/* サブタグ（名前と肩書きを配置） */}
           <div className="flex items-center gap-2 text-xs md:text-sm font-bold">
             <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full border border-blue-100">
-              IT活用サポート / 整体師
+              IT活用サポート / 業務改善
             </span>
             <span className="text-slate-400">by 並木 健太</span>
           </div>
 
-          {/* ドンと目に飛び込む大型キャッチコピー */}
+          {/* 大型キャッチコピー */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.15]">
             「難しい」を、<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">
@@ -77,7 +77,7 @@ export default function Home() {
           </h1>
 
           <p className="text-slate-600 text-sm md:text-base leading-relaxed max-w-xl">
-            専門用語ばかりのITも、自分自身の身体の現在地も。かみ砕いて理解し、自分で使いこなすための「枠組み」を整えます。
+            専門用語ばかりのITも、現場の複雑な業務フローも。かみ砕いて理解し、自分で使いこなすための「枠組み」を整えます。
           </p>
 
           {/* ヒーロー写真ビジュアル */}
@@ -100,10 +100,10 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* 3. 2つの事業軸（シンプルカード） */}
+        {/* 3. サービス内容 */}
         <motion.section variants={itemVariants} className="space-y-4">
           <h3 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">OUR SERVICES</h3>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-1 gap-4">
             {/* IT伴走 */}
             <div className="p-6 bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-100 shadow-sm space-y-3">
               <div className="text-2xl">💻</div>
@@ -120,11 +120,11 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* 4. スキルタグ */}
-        <motion.section variants={itemVariants} className="space-y-3">
+        {/* 4. スキルタグ（中央寄せ） */}
+        <motion.section variants={itemVariants} className="space-y-3 text-center">
           <h3 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">SKILLS</h3>
-          <div className="flex flex-wrap gap-2">
-            {["IT導入・伴走支援", "業務プロセス改善", "Wix (HP制作)", "GAS / Notion / LINE", "Java / Spring Boot / SQL", "骨格調整・身体理解"].map((skill) => (
+          <div className="flex flex-wrap justify-center gap-2">
+            {["IT導入・伴走支援", "業務プロセス改善", "Wix (HP制作)", "GAS / Notion / LINE", "Java / Spring Boot / SQL"].map((skill) => (
               <span 
                 key={skill} 
                 className="px-3 py-1 bg-white border border-slate-200 rounded-full text-slate-700 text-xs shadow-sm"
