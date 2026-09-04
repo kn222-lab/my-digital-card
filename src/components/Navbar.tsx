@@ -9,7 +9,6 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Profile", href: "/profile" },
-    { name: "Bodycare", href: "/bodycare" }, // ← ここを追加！
     { name: "Plan", href: "/plan" },
     { name: "Contact", href: "/contact"},
   ];
