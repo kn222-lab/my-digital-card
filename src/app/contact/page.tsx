@@ -8,9 +8,6 @@ import Link from "next/link";
 
 type SubmitStatus = "idle" | "sending" | "success" | "error";
 
-const GAS_ENDPOINT =
-  "https://script.google.com/macros/s/AKfycbwM_JxHormn2xXyCUyWe9u1ckshjfrefBaHSzhWtleeC9qWj-UNWSKcbl44SzCeUTvV/exec";
-
 const fieldClass =
   "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-100";
 
@@ -30,7 +27,7 @@ export default function ContactPage() {
 
     setStatus("sending");
     try {
-      const response = await fetch(GAS_ENDPOINT, {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(data),
