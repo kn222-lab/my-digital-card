@@ -1,18 +1,39 @@
 // src/app/page.tsx
 "use client";
+
 import { useEffect } from "react";
-import Image from "next/image";
-import { motion, Variants, useMotionValue, useTransform } from "framer-motion";
+import Link from "next/link";
+import { motion, useMotionValue, useTransform } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { MY_PROFILE } from "../constants/profile";
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
+const steps = ["ヒアリング", "課題整理", "ご提案・お見積もり", "制作・導入支援"];
 
 export default function Home() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX / window.innerWidth - 0.5);
-      mouseY.set(e.clientY / window.innerHeight - 0.5);
+    const handleMouseMove = (event: MouseEvent) => {
+      mouseX.set(event.clientX / window.innerWidth - 0.5);
+      mouseY.set(event.clientY / window.innerHeight - 0.5);
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
@@ -20,177 +41,176 @@ export default function Home() {
 
   const gradientX = useTransform(mouseX, [-0.5, 0.5], ["30%", "70%"]);
   const gradientY = useTransform(mouseY, [-0.5, 0.5], ["30%", "70%"]);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1, 
-      transition: { staggerChildren: 0.12, delayChildren: 0.1 }
-    }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
+  const spotlightBackground = useTransform(
+    [gradientX, gradientY],
+    ([x, y]) =>
+      `radial-gradient(circle at ${x} ${y}, rgba(29, 78, 216, 0.10) 0%, rgba(29, 78, 216, 0) 50%)`
+  );
 
   return (
-    <motion.main 
+    <motion.div
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-screen bg-slate-50 px-6 py-4 md:px-24 md:py-8 font-sans bg-grid relative overflow-hidden"
+      className="relative min-h-screen overflow-hidden bg-slate-50 px-6 py-8 font-sans md:px-12 md:py-14"
     >
-      {/* マウス追従スポットライト */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none opacity-40 z-0"
+      {/* 控えめなスポットライト */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 opacity-40"
+        style={{ background: spotlightBackground }}
+      />
+
+      {/* ファーストビュー右上のグリッド装飾 */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-0 top-0 z-0 h-[390px] w-[70%] opacity-40 [mask-image:linear-gradient(to_left,black,transparent)]"
         style={{
-          background: useTransform(
-            [gradientX, gradientY],
-            ([x, y]) => `radial-gradient(circle at ${x} ${y}, rgba(29, 78, 216, 0.15) 0%, rgba(29, 78, 216, 0) 50%)`
-          ),
+          backgroundImage:
+            "linear-gradient(to_right, rgba(148,163,184,0.18) 1px, transparent 1px), linear-gradient(to_bottom, rgba(148,163,184,0.18) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
         }}
       />
 
-      <div className="max-w-3xl mx-auto space-y-12 md:space-y-16 relative z-10 pt-2">
-        
-        {/* 大型キャッチコピー & ヒーロー写真 */}
-        <motion.section variants={itemVariants} className="space-y-6 pt-2">
-          {/* サブタグ（名前と肩書きを配置） */}
-          <div className="flex items-center gap-2 text-xs md:text-sm font-bold">
-            <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full border border-blue-100">
-              IT活用サポート / 業務改善
-            </span>
-            <span className="text-slate-400">by 並木 健太</span>
-          </div>
+      <div className="relative z-10 mx-auto max-w-4xl space-y-16 md:space-y-24">
+        {/* 1. ファーストビュー */}
+        <motion.section variants={itemVariants} className="space-y-7 pt-4 md:pt-8">
+          <p className="inline-flex rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
+            個人事業主・小規模事業者向け Web制作・ITサポート
+          </p>
 
-          {/* 大型キャッチコピー */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.15]">
-            「難しい」を、<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">
-              「使える」に変える。
+          <h1 className="text-3xl font-black leading-[1.4] tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
+            ホームページ制作から、
+            <br />
+            <span className="bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
+              日々の業務改善まで。
             </span>
           </h1>
 
-          <p className="text-slate-600 text-sm md:text-base leading-relaxed max-w-xl">
-            専門用語ばかりのITも、現場の複雑な業務フローも。かみ砕いて理解し、自分で使いこなすための「枠組み」を整えます。
+          <h2 className="text-lg font-bold leading-relaxed text-slate-800 md:text-xl">
+            今の状況を一緒に整理し、次の一歩を考える。
+          </h2>
+
+          <p className="max-w-2xl text-sm leading-8 text-slate-600 md:text-base">
+            「何から始めればいい？」「こんなことはできる？」
+            <br />
+            そんな疑問や困りごとから、お聞かせください。
+            <br className="hidden sm:block" />
+            お話を伺いながら課題を整理し、Webサイトや既存ツールを活用した方法をご提案します。
           </p>
 
-          {/* ヒーロー写真ビジュアル */}
-          <div className="relative w-full h-56 sm:h-72 md:h-80 rounded-3xl overflow-hidden shadow-xl border border-slate-200/60 group">
-            <img 
-              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
-              alt="Reframe Background"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-            />
-            {/* 上品なグラデーションオーバーレイ */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/10 to-transparent" />
-            
-            <div className="absolute bottom-4 left-6 right-6 text-white flex justify-between items-end">
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-300">Location</span>
-                <p className="text-xs font-bold">Kamakura & Zushi, Japan</p>
-              </div>
-              <span className="text-[10px] font-mono text-slate-300">Reframe / Identity</span>
-            </div>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-blue-700"
+            >
+              まずは無料で相談する →
+            </Link>
+            <Link href="/plan" className="text-sm font-bold text-slate-600 hover:text-blue-600">
+              サービスを見る →
+            </Link>
           </div>
         </motion.section>
 
-        {/* 3. サービス内容 */}
-        <motion.section variants={itemVariants} className="space-y-4">
-          <h3 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">OUR SERVICES</h3>
-          <div className="grid md:grid-cols-1 gap-4">
-            {/* IT伴走 */}
-            <div className="p-6 bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-100 shadow-sm space-y-3">
-              <div className="text-2xl">💻</div>
-              <h4 className="font-bold text-slate-900 text-base md:text-lg">IT伴走 & 業務改善</h4>
-              <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
-                現場のリテラシーに合わせてツールを最適化。自分で使いこなせる（自走できる）まで丁寧に伴走します。
+        {/* 2. できること */}
+        <motion.section variants={itemVariants} className="space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-sm font-bold text-blue-600">できること</h2>
+            <p className="text-xl font-bold text-slate-900 md:text-2xl">
+              Web制作と、日々の業務を支える仕組みづくり。
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <article className="space-y-3 rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span aria-hidden="true" className="text-2xl">💻</span>
+                <span className="text-xs font-bold text-blue-600">Wixを活用</span>
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Webサイト制作</h3>
+              <p className="text-sm leading-7 text-slate-600">
+                ホームページの新規制作・リニューアル・運用支援。
+                事業の魅力や伝えたいことを整理し、分かりやすいサイトをつくります。
               </p>
-              <div className="pt-1 flex flex-wrap gap-1">
-                {["Wix", "GAS", "Java / SQL"].map(t => (
-                  <span key={t} className="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded">{t}</span>
-                ))}
+            </article>
+
+            <article className="space-y-3 rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span aria-hidden="true" className="text-2xl">⚙️</span>
+                <span className="text-xs font-bold text-emerald-600">GASなどを活用</span>
               </div>
+              <h3 className="text-lg font-bold text-slate-900">業務効率化</h3>
+              <p className="text-sm leading-7 text-slate-600">
+                日々の作業の自動化や情報共有の仕組みづくり。
+                今使っているツールも活かしながら、無理のない方法を考えます。
+              </p>
+            </article>
+          </div>
+          <div className="text-right">
+            <Link href="/plan" className="text-sm font-bold text-blue-600 hover:text-blue-700">
+              サービスの詳細を見る →
+            </Link>
+          </div>
+        </motion.section>
+
+        {/* 3. 大切にしていること */}
+        <motion.section variants={itemVariants} className="space-y-5">
+          <h2 className="text-sm font-bold text-blue-600">大切にしていること</h2>
+          <div className="space-y-5 rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm md:p-8">
+            <h3 className="text-xl font-bold leading-relaxed text-slate-900 md:text-2xl">
+              答えを出す前に、まず状況を知る。
+            </h3>
+            <p className="text-sm leading-8 text-slate-600 md:text-base">
+              同じような悩みでも、事業の状況やこれまでの経緯によって、必要な方法は異なります。
+              だからこそ、まずはお話を伺い、今の状況や課題を一緒に整理することを大切にしています。
+            </p>
+            <p className="text-sm leading-8 text-slate-600 md:text-base">
+              ITを導入すること自体を目的にせず、その方に合った次の一歩を考え、
+              必要な仕組みづくりまでサポートします。
+            </p>
+            <div className="flex flex-wrap items-center gap-2 pt-2">
+              {steps.map((step, index) => (
+                <div key={step} className="flex items-center gap-2">
+                  {index > 0 && <span aria-hidden="true" className="text-xs text-slate-300">→</span>}
+                  <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs text-blue-700">
+                    {step}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
-        </motion.section>
-
-        {/* 4. スキルタグ（中央寄せ） */}
-        <motion.section variants={itemVariants} className="space-y-3 text-center">
-          <h3 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">SKILLS</h3>
-          <div className="flex flex-wrap justify-center gap-2">
-            {["IT導入・伴走支援", "業務プロセス改善", "Wix (HP制作)", "GAS / Notion / LINE", "Java / Spring Boot / SQL"].map((skill) => (
-              <span 
-                key={skill} 
-                className="px-3 py-1 bg-white border border-slate-200 rounded-full text-slate-700 text-xs shadow-sm"
-              >
-                {skill}
-              </span>
-            ))}
+          <div className="text-right">
+            <Link href="/works" className="text-sm font-bold text-blue-600 hover:text-blue-700">
+              これまでの制作・支援実績を見る →
+            </Link>
           </div>
         </motion.section>
 
-        {/* 5. 主な実績 */}
-        <motion.section variants={itemVariants} className="space-y-4">
-          <h3 className="text-xs font-mono font-bold tracking-widest text-slate-400 uppercase">WORKS & PROJECTS</h3>
-          <div className="space-y-3">
-            {MY_PROFILE.projects.map((project) => (
-              <div 
-                key={project.id} 
-                className="p-5 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-100 shadow-sm space-y-3"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <h4 className="text-sm md:text-base font-bold text-slate-900">{project.title}</h4>
-                  
-                  {/* link が存在する場合のみボタンを表示 */}
-                  {project.link && (
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors w-fit"
-                    >
-                      <span>デモ・詳細を見る</span>
-                      <span className="text-[10px]">↗</span>
-                    </a>
-                  )}
-                </div>
-
-                <p className="text-xs md:text-sm text-slate-600 leading-relaxed">{project.description}</p>
-
-                {/* 技術タグ */}
-                <div className="flex flex-wrap gap-1 pt-1">
-                  {project.technology.map((t) => (
-                    <span key={t} className="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+        {/* 4. お問い合わせ */}
+        <motion.section variants={itemVariants} className="space-y-5">
+          <h2 className="text-sm font-bold text-blue-600">お問い合わせ</h2>
+          <div className="space-y-5 rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-sm md:p-8">
+            <h3 className="text-xl font-bold text-slate-900 md:text-2xl">
+              まずは、お話を聞かせてください。
+            </h3>
+            <p className="text-sm leading-8 text-slate-600">
+              具体的な依頼内容が決まっていなくても大丈夫です。
+              初回のヒアリング・課題整理は無料で行い、
+              具体的な調査や制作・導入支援は内容に応じてお見積もりします。
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-blue-700"
+            >
+              無料相談・お問い合わせ →
+            </Link>
           </div>
         </motion.section>
 
-        {/* 6. プロフィールページへのリンク */}
-        <motion.section variants={itemVariants} className="text-center pt-2">
-          <a 
-            href="/profile" 
-            className="inline-block text-xs font-bold text-slate-500 hover:text-blue-600 bg-white border border-slate-200 px-5 py-2.5 rounded-full transition-all shadow-sm hover:shadow"
-          >
-            Reframe / の詳しいプロフィール・思想を見る →
-          </a>
-        </motion.section>
-
-        <footer className="text-center pt-6 text-slate-400 text-[10px]">
-          © 2026 {MY_PROFILE.name} | Reframe / Digital Identity
+        <footer className="border-t border-slate-200 pt-6 text-center text-xs text-slate-400">
+          © 2026 {MY_PROFILE.name} | Reframe /
         </footer>
-        
       </div>
-    </motion.main>
+    </motion.div>
   );
 }

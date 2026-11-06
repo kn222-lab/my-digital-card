@@ -1,92 +1,259 @@
+
 "use client";
+
 import { motion } from "framer-motion";
+import Link from "next/link";
 import Image from "next/image";
+
+import {
+  ArrowRight,
+  Code2,
+  Globe2,
+  MessageCircle,
+  Settings2,
+  UserRound,
+} from "lucide-react";
+
+const experiences = [
+  {
+    icon: Code2,
+    title: "システム開発・運用",
+    description:
+      "業務システムの開発や運用・保守など、さまざまな現場での経験があります。",
+  },
+  {
+    icon: Globe2,
+    title: "Webサイト制作",
+    description:
+      "Wixなどを活用し、目的や運用方法に合わせたホームページの制作・リニューアルを行っています。",
+  },
+  {
+    icon: Settings2,
+    title: "業務改善・仕組みづくり",
+    description:
+      "GoogleスプレッドシートやGASなどを活用し、日々の業務を少しでも進めやすくする仕組みを考えます。",
+  },
+];
 
 export default function ProfilePage() {
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 px-6 py-20">
-      <div className="max-w-3xl mx-auto">
-        
-        {/* プロフィール上部：写真と名前 */}
-        <div className="flex flex-col md:flex-row items-center gap-10 mb-20">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="relative"
-          >
-            {/* 写真の背景に青いアクセント（光彩効果） */}
-            <div className="absolute -inset-1 bg-blue-600 rounded-2xl blur opacity-25"></div>
-            
-            <div className="relative w-48 h-48 md:w-56 md:h-56">
-              <Image
-                src="/profile.jpg" // public/profile.jpg を参照
-                alt="並木 健太"
-                fill
-                className="object-cover rounded-2xl border-2 border-slate-700 shadow-2xl"
-                priority
-              />
-            </div>
-          </motion.div>
+    <div className="min-h-screen bg-white text-slate-800">
+      {/* ページ上部 */}
+      <section className="relative overflow-hidden bg-slate-50 px-6 pb-20 pt-20">
+        <div
+          className="pointer-events-none absolute right-0 top-0 h-80 w-1/2 opacity-40"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #cbd5e1 1px, transparent 1px), linear-gradient(to bottom, #cbd5e1 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+            maskImage:
+              "linear-gradient(to left, black, transparent)",
+          }}
+        />
 
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="text-center md:text-left"
+        <div className="relative mx-auto max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl font-bold mb-2">
-              Profile <span className="text-blue-600">/</span>
+            <p className="mb-4 text-sm font-semibold tracking-widest text-blue-600">
+              Reframe / PROFILE
+            </p>
+
+            <h1 className="mb-12 text-4xl font-bold tracking-tight text-slate-900">
+              プロフィール
+              <span className="ml-2 text-blue-600">/</span>
             </h1>
-            <p className="text-blue-400 text-xl font-medium mb-4">並木 健太 | Kenta Namiki</p>
-            <div className="flex gap-3 justify-center md:justify-start">
-              <span className="px-3 py-1 bg-slate-800 rounded-full text-xs border border-slate-700 text-slate-300">Web Engineer</span>
-              <span className="px-3 py-1 bg-slate-800 rounded-full text-xs border border-slate-700 text-slate-300">Optimize Engineer</span>
-              <span className="px-3 py-1 bg-slate-800 rounded-full text-xs border border-slate-700 text-slate-300">Business Partner</span>
+
+            <div className="grid items-center gap-12 md:grid-cols-[240px_1fr]">
+              {/* 写真：後から設定 */}
+              <div className="relative h-60 w-60 overflow-hidden rounded-3xl shadow-sm">
+                <Image
+                  src="/profile.jpg"
+                  alt="並木 健太"
+                  fill
+                  sizes="240px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+
+              <div>
+                <p className="mb-3 text-sm font-medium text-blue-600">
+                  Web制作・ITサポート
+                </p>
+
+                <h2 className="mb-2 text-3xl font-bold text-slate-900">
+                  並木 健太
+                </h2>
+
+                <p className="mb-7 text-sm text-slate-500">
+                  Kenta Namiki
+                </p>
+
+                <h3 className="mb-5 text-2xl font-bold leading-relaxed text-slate-900">
+                  まず、あなたのことを
+                  <br />
+                  知るところから。
+                </h3>
+
+                <p className="max-w-xl leading-8 text-slate-600">
+                  ホームページ制作や業務改善など、
+                  ITを活用したサポートを行っています。
+                  <br />
+                  大切にしているのは、すぐに答えを出すことよりも、
+                  まず相手の状況や思いを理解すること。
+                  <br />
+                  一緒に考えながら、その人に合った方法を
+                  見つけていきたいと思っています。
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
+      </section>
 
-        {/* ストーリー・背景セクション */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="space-y-16"
-        >
-          <section>
-            <h2 className="text-xl font-bold mb-6 border-l-4 border-blue-600 pl-4">Background</h2>
-            <div className="text-slate-300 leading-relaxed space-y-6">
-                <p>
-                エンジニアとしてキャリアをスタートした後、一度その道を離れ、リラクゼーション・整体の世界に身を置きました。
-                </p>
-                <p>
-                日々、身体や人の状態を深く見つめる経験を通じて学んだのは、<span className="text-white font-medium underline decoration-blue-500/50 underline-offset-4">「物事は立ち位置や枠組み（フレーム）次第で、見え方が大きく変わる」</span>ということです。
-                </p>
-                <p>
-                それは単なる身体の構造に留まりませんでした。一人ひとりの人生観や価値観、根底にある考え方に深く触れる中で、<span className="text-blue-400">「何を良しとするか」というフレームが変われば、導き出される解決策もまた変わる</span>という事実に強い影響を受けました。
-                </p>
-                <p>
-                再びエンジニアの領域に戻ってきた今、以前と同じ場所に立っていても、見えている景色はまったく違います。この多角的な視点と、人の価値観に寄り添うマインドこそが、私の最大の強みです。
-                </p>
+      {/* 仕事への思い */}
+      <section className="px-6 py-24">
+        <div className="mx-auto max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="mb-8 flex items-center gap-3">
+              <div className="h-8 w-1 rounded-full bg-blue-600" />
+              <h2 className="text-2xl font-bold text-slate-900">
+                事業への思い
+              </h2>
             </div>
-          </section>
 
-          {/* ビジョン・役割のカード */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-8 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 group">
-              <h3 className="text-blue-400 font-bold mb-2 group-hover:text-blue-300 transition-colors">Vision</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                「無理のない前進」をつくる。技術を目的とするのではなく、ビジネスや生活がより良く循環するための手段として実装します。
+            <div className="max-w-3xl space-y-6 leading-9 text-slate-600">
+              <p>
+                ITエンジニアとして、業務システムの開発や運用、
+                業務改善などに携わってきました。
+              </p>
+
+              <p>
+                さまざまな仕事を経験する中で、
+                次第に「自分だからこそできる関わり方」を
+                考えるようになりました。
+              </p>
+
+              <p>
+                その思いを強くしたのが、鎌倉での出会いです。
+                自分の経験や得意なことを活かし、
+                主体的に活動する人たち。
+                その姿に刺激を受け、
+                私自身も身近な人たちの力になりたいと
+                考えるようになりました。
+              </p>
+
+              <p>
+                私が大切にしているのは、
+                技術やサービスを提案する前に、
+                まず相手のことを知ること。
+              </p>
+
+              <p className="font-medium text-slate-900">
+                何に困っているのか。
+                <br />
+                何を大切にしているのか。
+              </p>
+
+              <p>
+                一緒に考えながら、その人に合った次の一歩を
+                見つけていきたいと思っています。
               </p>
             </div>
-            <div className="p-8 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 group">
-              <h3 className="text-blue-400 font-bold mb-2 group-hover:text-blue-300 transition-colors">Role</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                ビジネス実装パートナーとして、要件定義からTypeScriptによる堅牢な開発、デプロイ後の運用まで一気通貫でサポートします。
-              </p>
-            </div>
-          </section>
-        </motion.div>
-      </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* これまでの経験 */}
+      <section className="bg-slate-50 px-6 py-24">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-12">
+            <p className="mb-3 text-sm font-semibold tracking-widest text-blue-600">
+              EXPERIENCE
+            </p>
+
+            <h2 className="mb-4 text-2xl font-bold text-slate-900">
+              これまでの経験
+            </h2>
+
+            <p className="max-w-2xl leading-8 text-slate-600">
+              これまでのITエンジニアとしての経験を活かし、
+              ご相談の内容に応じて、必要な方法を一緒に考えます。
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {experiences.map((item, index) => {
+              const Icon = item.icon;
+
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.1,
+                  }}
+                  className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm"
+                >
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50">
+                    <Icon className="h-6 w-6 text-blue-600" />
+                  </div>
+
+                  <h3 className="mb-4 text-lg font-bold text-slate-900">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-sm leading-7 text-slate-600">
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* お問い合わせ */}
+      <section className="px-6 py-24">
+        <div className="mx-auto max-w-4xl rounded-3xl border border-slate-200 bg-white px-8 py-14 text-center shadow-sm md:px-16">
+          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
+            <MessageCircle className="h-7 w-7 text-blue-600" />
+          </div>
+
+          <h2 className="mb-5 text-2xl font-bold text-slate-900">
+            まずは、お話を聞かせてください。
+          </h2>
+
+          <p className="mx-auto mb-8 max-w-xl leading-8 text-slate-600">
+            まだ具体的な依頼内容が決まっていなくても大丈夫です。
+            今の状況や気になっていることから、
+            一緒に整理していきましょう。
+          </p>
+
+          <p className="mb-8 text-sm text-slate-500">
+            初回ヒアリング・課題整理は無料です。
+          </p>
+
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white transition-colors hover:bg-blue-700"
+          >
+            無料相談・お問い合わせ
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

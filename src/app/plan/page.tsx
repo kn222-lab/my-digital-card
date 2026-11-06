@@ -1,150 +1,259 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { CheckCircle2, ArrowRight, MessageSquare, Rocket, Settings, RefreshCcw } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  ClipboardList,
+  FileText,
+  MessageSquare,
+  Monitor,
+  Settings2,
+  Wrench,
+} from "lucide-react";
 import Link from "next/link";
 
+const services = [
+  {
+    title: "Webサイト制作・リニューアル",
+    description:
+      "事業の特徴や伝えたいことを整理し、見に来た方に分かりやすく伝わるホームページを制作します。納品後の更新のしやすさも大切にしています。",
+    icon: Monitor,
+    iconColor: "text-blue-600",
+    iconBg: "bg-blue-50",
+    examples: [
+      "Wixを活用したホームページ制作",
+      "既存サイトのリニューアル",
+      "お知らせ・ブログなどの更新しやすい仕組みづくり",
+      "公開後の更新方法のご案内",
+    ],
+  },
+  {
+    title: "業務改善・仕組みづくり",
+    description:
+      "日々の繰り返し作業や情報共有の方法を見直し、今使っているツールも活かしながら、無理なく続けられる仕組みを考えます。",
+    icon: Settings2,
+    iconColor: "text-emerald-600",
+    iconBg: "bg-emerald-50",
+    examples: [
+      "Googleスプレッドシート・GASによる作業の自動化",
+      "LINE・Notionなどを活用した情報共有",
+      "既存ツール同士の連携",
+      "業務の流れの整理・簡易ツールの構築",
+    ],
+  },
+];
+
+const questions = [
+  "ホームページを作りたいけれど、何から始めればいい？",
+  "今あるホームページをもっと使いやすくしたい",
+  "毎月の集計や転記など、同じ作業に時間がかかっている",
+  "LINEやGoogleのツールを、仕事でもっと活用したい",
+];
+
+const steps = [
+  {
+    number: "01",
+    title: "ヒアリング・課題整理",
+    description:
+      "今の状況やこれまでの経緯、お困りごとを伺います。初回のヒアリング・課題整理は無料です。",
+    icon: MessageSquare,
+  },
+  {
+    number: "02",
+    title: "ご提案・お見積もり",
+    description:
+      "必要な対応や進め方を整理し、作業範囲と費用をご案内します。内容をご確認いただいてから進めます。",
+    icon: ClipboardList,
+  },
+  {
+    number: "03",
+    title: "制作・導入",
+    description:
+      "ご相談した内容に沿って制作や設定を進めます。必要に応じて途中経過も共有します。",
+    icon: Wrench,
+  },
+  {
+    number: "04",
+    title: "納品・使い方のご案内",
+    description:
+      "完成したものをお渡しし、更新方法や使い方をご案内します。追加の改善が必要な場合は別途ご相談いただけます。",
+    icon: FileText,
+  },
+];
+
 export default function PlanPage() {
-  const steps = [
-    { title: "現状ヒアリング", icon: <MessageSquare className="w-5 h-5" /> },
-    { title: "改善案の提示", icon: <Settings className="w-5 h-5" /> },
-    { title: "小さく実装", icon: <Rocket className="w-5 h-5" /> },
-    { title: "現場で運用", icon: <CheckCircle2 className="w-5 h-5" /> },
-    { title: "改善・拡張", icon: <RefreshCcw className="w-5 h-5" /> },
-  ];
-
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 px-6 py-20">
-      <div className="max-w-4xl mx-auto">
-        
-        {/* タイトル */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+    <main className="relative min-h-screen overflow-hidden bg-slate-50 px-6 py-12 font-sans text-slate-900 md:px-12 md:py-16">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-0 top-0 h-[360px] w-[65%] opacity-40 [mask-image:linear-gradient(to_left,black,transparent)]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to_right, rgba(148,163,184,0.18) 1px, transparent 1px), linear-gradient(to_bottom, rgba(148,163,184,0.18) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-4xl space-y-16 md:space-y-20">
+        {/* ページ冒頭 */}
+        <motion.header
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-16 text-center md:text-left"
+          transition={{ duration: 0.5 }}
+          className="space-y-5"
         >
-          <h1 className="text-4xl font-bold mb-4">
-            Plan <span className="text-blue-600">/</span>
-          </h1>
-          <p className="text-slate-400">現場の状況やご予算に合わせて、無理のない最適なステップをご提案します。</p>
-        </motion.div>
-
-        {/* できることセクション */}
-        <section className="mb-20">
-          <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
-            できること <span className="text-blue-600">/</span>
+          <p className="text-xs font-bold tracking-widest text-blue-600">REframe / SERVICE</p>
+          <h1 className="text-3xl font-black tracking-tight md:text-4xl">サービス</h1>
+          <h2 className="text-xl font-bold leading-relaxed text-slate-800 md:text-2xl">
+            ホームページ制作も、日々の業務の困りごとも。
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { 
-                title: "小さく作る・整える", 
-                desc: "WixやGAS・Notionを活用し、まずは現場に寄り添った仕組みをつくります。",
-                items: ["Wix (自走型HP制作)", "スプレッドシート/GAS自動化", "LINE／Notion連携", "簡易業務システム構築"]
-              },
-              { 
-                title: "使える形にする", 
-                desc: "作るだけでなく、現場で「自分たちで回せる形」に整えます。",
-                items: ["業務フロー整理", "操作レクチャー", "更新手順のマニュアル化", "改善提案"]
-              },
-              { 
-                title: "育てる・伴走する", 
-                desc: "導入後も、状況や変化に合わせて無理なく改善・拡張します。",
-                items: ["機能追加・変更対応", "Webサイトの更新サポート", "継続的なIT相談"]
-              }
-            ].map((box, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-slate-800/40 border border-slate-700/50">
-                <h3 className="text-blue-400 font-bold mb-3">{box.title}</h3>
-                <p className="text-xs text-slate-400 mb-4 h-12">{box.desc}</p>
-                <ul className="space-y-2">
-                  {box.items.map((item, j) => (
-                    <li key={j} className="text-sm flex items-center gap-2 text-slate-300">
-                      <CheckCircle2 className="w-4 h-4 text-blue-500" /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 進め方セクション */}
-        <section className="mb-20 bg-slate-800/20 p-8 rounded-3xl border border-slate-800">
-          <h2 className="text-2xl font-bold mb-8 text-center">進め方 <span className="text-blue-600">/</span></h2>
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {steps.map((step, i) => (
-              <div key={i} className="flex flex-col md:flex-row items-center gap-4 flex-1">
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full bg-slate-800 border border-blue-500/50 flex items-center justify-center text-blue-400 mb-2">
-                    {step.icon}
-                  </div>
-                  <span className="text-xs font-medium text-slate-300 whitespace-nowrap">{step.title}</span>
-                </div>
-                {i !== steps.length - 1 && (
-                  <ArrowRight className="hidden md:block w-4 h-4 text-slate-600" />
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 参考モデル（価格例）セクション */}
-        <section className="mb-20">
-          <h2 className="text-2xl font-bold mb-2">サポート事例・参考モデル <span className="text-blue-600">/</span></h2>
-          <p className="text-sm text-slate-400 mb-8">
-            決まった定額プランではなく、ご要望や課題の範囲に応じて柔軟にお見積もりします（※表示金額は参考の目安です）。
+          <p className="max-w-2xl text-sm leading-8 text-slate-600 md:text-base">
+            ホームページの制作や、日々の業務を効率化する仕組みづくりをお手伝いしています。
+            具体的な依頼内容が決まっていなくても構いません。
+            今の状況やお困りごとを伺いながら、必要な方法を一緒に考えます。
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { 
-                name: "自走型Webサイト制作", 
-                price: "10万円〜", 
-                badge: "実例あり",
-                detail: "Wixを活用したHP制作。納品後もご自身でお知らせやブログを更新できるよう操作レクチャーまで伴走します。" 
-              },
-              { 
-                name: "業務整理 ＋ 仕組み構築", 
-                price: "5万円〜15万円", 
-                badge: "スポット",
-                detail: "LINE×Notion連携やGASでの自動化など、現場のリテラシーに合わせた業務改善システムを構築します。" 
-              },
-              { 
-                name: "継続伴走・レクチャー", 
-                price: "月3万円〜", 
-                badge: "月額相談",
-                detail: "導入後のシステム改修やWeb更新サポート、日々のITの困りごとに定額で相談に乗るパートナー契約です。" 
-              }
-            ].map((plan, i) => (
-              <div key={i} className="relative p-8 rounded-2xl bg-gradient-to-b from-slate-800/60 to-slate-900 border border-slate-700 hover:border-blue-500/50 transition-colors flex flex-col justify-between">
-                <div>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-bold text-lg">{plan.name}</h3>
-                    <span className="text-[10px] bg-blue-900/60 text-blue-300 px-2 py-0.5 rounded border border-blue-700/50">
-                      {plan.badge}
-                    </span>
-                  </div>
-                  <div className="text-2xl font-bold text-blue-400 mb-4">{plan.price}</div>
-                  <p className="text-sm text-slate-400 leading-relaxed">{plan.detail}</p>
-                </div>
+        </motion.header>
+
+        {/* 相談例 */}
+        <section aria-labelledby="questions-heading" className="space-y-6">
+          <div className="space-y-2">
+            <h2 id="questions-heading" className="text-xl font-bold md:text-2xl">
+              こんなことを相談できます
+            </h2>
+            <p className="text-sm text-slate-600">
+              「何を頼めばいいのか分からない」という段階からでも大丈夫です。
+            </p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            {questions.map((question) => (
+              <div
+                key={question}
+                className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white/90 p-5 shadow-sm"
+              >
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" aria-hidden="true" />
+                <p className="text-sm leading-7 text-slate-700">{question}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* 価格について・問い合わせ案内 */}
-        <section className="text-center bg-blue-600/10 p-10 rounded-3xl border border-blue-500/20">
-          <h2 className="text-xl font-bold mb-4">お気軽にご相談ください <span className="text-blue-600">/</span></h2>
-          <p className="text-slate-300 mb-6 leading-relaxed max-w-xl mx-auto text-sm md:text-base">
-            「何から手をつければいいか分からない」「予算○万円の中でできることを相談したい」といった状態でも全く問題ありません。<br />
-            まずは現状のお困りごとをお聞かせください。
+        {/* 具体的な支援内容 */}
+        <section aria-labelledby="services-heading" className="space-y-6">
+          <div className="space-y-2">
+            <h2 id="services-heading" className="text-xl font-bold md:text-2xl">
+              具体的にできること
+            </h2>
+            <p className="text-sm text-slate-600">
+              目的や状況に合わせて、必要な手段を選びます。
+            </p>
+          </div>
+          <div className="grid gap-5 md:grid-cols-2">
+            {services.map((service) => {
+              const Icon = service.icon;
+              return (
+                <article
+                  key={service.title}
+                  className="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-sm md:p-7"
+                >
+                  <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-xl ${service.iconBg}`}>
+                    <Icon className={`h-6 w-6 ${service.iconColor}`} aria-hidden="true" />
+                  </div>
+                  <h3 className="mb-3 text-lg font-bold">{service.title}</h3>
+                  <p className="mb-5 text-sm leading-7 text-slate-600">{service.description}</p>
+                  <ul className="space-y-3 border-t border-slate-100 pt-5">
+                    {service.examples.map((example) => (
+                      <li key={example} className="flex items-start gap-2 text-sm leading-6 text-slate-700">
+                        <CheckCircle2 className={`mt-1 h-4 w-4 shrink-0 ${service.iconColor}`} aria-hidden="true" />
+                        <span>{example}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              );
+            })}
+          </div>
+          <div className="rounded-xl border border-blue-100 bg-blue-50/70 p-5">
+            <h3 className="mb-2 text-sm font-bold text-slate-900">作って終わりにしないために</h3>
+            <p className="text-sm leading-7 text-slate-600">
+              制作・導入後にご自身で使い続けられることも大切にしています。
+              更新方法のご案内や、必要に応じた改善・追加対応についてもご相談いただけます。
+            </p>
+          </div>
+        </section>
+
+        {/* ご相談の流れ */}
+        <section aria-labelledby="flow-heading" className="space-y-6">
+          <h2 id="flow-heading" className="text-xl font-bold md:text-2xl">
+            ご相談から納品まで
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {steps.map((step) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.number} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <div className="mb-4 flex items-center justify-between">
+                    <span className="text-sm font-bold tracking-widest text-blue-600">{step.number}</span>
+                    <Icon className="h-5 w-5 text-slate-400" aria-hidden="true" />
+                  </div>
+                  <h3 className="mb-2 font-bold text-slate-900">{step.title}</h3>
+                  <p className="text-sm leading-7 text-slate-600">{step.description}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* 費用 */}
+        <section aria-labelledby="price-heading" className="space-y-6">
+          <div className="space-y-3">
+            <h2 id="price-heading" className="text-xl font-bold md:text-2xl">費用について</h2>
+            <p className="text-sm leading-7 text-slate-600">
+              決まった料金プランではなく、ご相談内容と作業範囲に応じて個別にお見積もりします。
+              初回のヒアリング・課題整理は無料です。
+            </p>
+          </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-5">
+              <div>
+                <p className="mb-1 text-xs font-semibold text-slate-500">ご相談の入口</p>
+                <h3 className="font-bold">初回ヒアリング・課題整理</h3>
+              </div>
+              <span className="text-lg font-bold text-blue-600">無料</span>
+            </div>
+            <div className="space-y-3 pt-5">
+              <p className="text-xs font-semibold text-slate-500">過去の制作実績（参考）</p>
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="font-bold">Wixによるホームページ制作</h3>
+                <span className="text-xl font-bold text-slate-900">10万円</span>
+              </div>
+              <p className="text-sm leading-7 text-slate-600">
+                ホームページを制作し、ご自身でお知らせなどを更新できる形に整えた事例です。
+              </p>
+              <p className="text-xs leading-6 text-slate-500">
+                ※ 過去の案件における実績金額であり、最低料金や定額プランではありません。
+                実際の費用はご依頼内容によって異なります。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* お問い合わせ */}
+        <section className="rounded-2xl border border-blue-100 bg-white p-7 text-center shadow-sm md:p-10">
+          <h2 className="mb-4 text-xl font-bold md:text-2xl">まずは、お話を聞かせてください。</h2>
+          <p className="mx-auto mb-7 max-w-xl text-sm leading-8 text-slate-600">
+            相談したい内容がまだまとまっていなくても大丈夫です。
+            今の状況を伺いながら、できることを一緒に整理します。
           </p>
-          <Link 
-            href="/contact" 
-            className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-blue-500/25"
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-blue-700"
           >
-            ご相談・お見積もりはこちら（無料）
+            無料相談・お問い合わせ
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </section>
-
       </div>
-    </div>
+    </main>
   );
 }
