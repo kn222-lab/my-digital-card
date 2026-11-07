@@ -47,16 +47,24 @@ export async function POST(request: Request) {
       signal: AbortSignal.timeout(15000),
     });
 
+    
     if (!response.ok) {
-      console.error("GAS response status:", response.status);
+      throw new Error(`GAS HTTP error: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.success !== true) {
+      console.error("GAS processing failed:", result.error);
 
       return NextResponse.json(
-        { error: "送信に失敗しました。" },
+        { error: "メール送信に失敗しました。" },
         { status: 502 }
       );
     }
 
     return NextResponse.json({ success: true });
+
   } catch (error) {
     console.error("Contact API error:", error);
 
